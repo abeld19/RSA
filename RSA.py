@@ -1,3 +1,5 @@
+from Bob import Bob
+
 class menu:
 
     TITLE = (
@@ -37,6 +39,8 @@ class menu:
 
     def q1(self):
         print("in q1")
+        b = Bob()
+        b.run()
 
     def q2(self):
         print("in q2")
