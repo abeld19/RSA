@@ -39,8 +39,15 @@ class menu:
 
     def q1(self):
         print("in q1")
-        b = Bob()
-        b.run()
+         # Example primes p and q, public exponent e, and plaintext message
+        p = 61  # Prime number 1
+        q = 53  # Prime number 2
+        e = 17  # Public exponent (should be coprime with r)
+        plaintext = "Hello, RSA!"  # Plaintext message
+
+        # Initialize and run Bob
+        bob = Bob()
+        bob.run(p, q, e, plaintext)
 
     def q2(self):
         print("in q2")
