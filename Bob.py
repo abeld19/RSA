@@ -1,49 +1,50 @@
 import math
+import random
+from sympy import randprime
 
 class Bob:
-    def __init__(self):
-        pass
+    def __init__(self, bit_length=512):
+        self.bit_length = bit_length
+        self.p = None
+        self.q = None
+        self.n = None
+        self.phi = None
+        self.e = None
+        self.d = None
+        self.generate_keys()
 
-    def generate_private_key(self, e, r):
-        """Generate the private key (d) using the modular inverse of e mod r."""
-        def gcd_extended(a, b):
-            if a == 0:
-                return b, 0, 1
-            gcd, x1, y1 = gcd_extended(b % a, a)
-            x = y1 - (b // a) * x1
-            y = x1
-            return gcd, x, y
+    def generate_keys(self):
+        """Generate Bob's RSA key pair."""
+        # Generate two large primes p and q
+        self.p = randprime(2**(self.bit_length - 1), 2**self.bit_length)
+        self.q = randprime(2**(self.bit_length - 1), 2**self.bit_length)
 
-        gcd, x, _ = gcd_extended(e, r)
-        if gcd != 1:
-            raise ValueError("e and r are not coprime")
-        return x % r
+        # Compute n = p * q
+        self.n = self.p * self.q
 
-    def encrypt(self, plaintext, e, n):
-        """Encrypt the plaintext using the public key (e, n)."""
-        return [pow(ord(char), e, n) for char in plaintext]
+        # Compute phi = (p - 1) * (q - 1)
+        self.phi = (self.p - 1) * (self.q - 1)
 
-    def decrypt(self, ciphertext, d, n):
-        """Decrypt the ciphertext using the private key d and modulus n."""
-        return ''.join(chr(pow(c, d, n)) for c in ciphertext)
+        # Choose e such that gcd(e, phi) = 1
+        while True:
+            e_candidate = random.randrange(2, self.phi)
+            if math.gcd(e_candidate, self.phi) == 1:
+                self.e = e_candidate
+                break
 
-    def run(self, p, q, e, plaintext):
-        """Run the RSA encryption and decryption process."""
-        # Compute n and r
-        n = p * q
-        r = (p - 1) * (q - 1)
+        # Compute d, the modular inverse of e mod phi
+        self.d = pow(self.e, -1, self.phi)
 
-        # Generate private key
-        d = self.generate_private_key(e, r)
+    def decrypt(self, ciphertext):
+        """Decrypt the ciphertext using the sender's public key (e, n)."""
+        return ''.join(chr(pow(c, self.d, self.n)) for c in ciphertext)
 
-        # Display keys
-        print("Public Key (e, n):", (e, n))
-        print("Private Key (d, n):", (d, n))
+    def run(self, sender_e, sender_n, ciphertext):
+        """Run the RSA decryption process using the sender's public key."""
+        print("Bob's Public Key (e, n):", (self.e, self.n))
+        print("Bob's Private Key (d, n):", (self.d, self.n))
+        print("Ciphertext received from sender:", ciphertext)
 
-        # Encrypt the plaintext
-        ciphertext = self.encrypt(plaintext, e, n)
-        print("Ciphertext (ASCII values):", ciphertext)
-
-        # Decrypt the ciphertext
-        decrypted_message = self.decrypt(ciphertext, d, n)
+        # Decrypt the ciphertext using sender's public key
+        decrypted_message = self.decrypt(ciphertext, sender_e, sender_n)
         print("Decrypted message:", decrypted_message)

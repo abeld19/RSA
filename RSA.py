@@ -40,17 +40,17 @@ class menu:
 
     def q1(self):
         print("in q1")
-        # Example primes p and q, public exponent e, and plaintext message
-        p = 61  # Prime number 1
-        q = 53  # Prime number 2
-        e = 17  # Public exponent (should be coprime with r)
-        plaintext = "Hello, RSA!"  # Plaintext message
-        
-        A = Alice()
-        A.run()
-        # Initialize and run Bob
+        alice = Alice()
         bob = Bob()
-        bob.run(p, q, e, plaintext)
+        print("Alice's Public Key (e, n):", (alice.e, alice.n))
+        print("Bob's Public Key (e, n):", (bob.e, bob.n))
+        
+        message = input("Enter a message to encrypt: ")
+        ciphertext = alice.encrypt(message, bob.e, bob.n)
+        print("Encrypted message (ciphertext):", ciphertext)
+        
+        decrypted_message = bob.decrypt(ciphertext)
+        print("Bob decrypted the message:", decrypted_message)
 
 
     def q2(self):

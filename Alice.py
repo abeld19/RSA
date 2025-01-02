@@ -37,9 +37,8 @@ class Alice:
         self.d = pow(self.e, -1, self.phi)
         # Alice typically shares (e, n) with Bob and keeps p, q, d secret.
 
-    def encrypt(self, message: int) -> int:
-    
-        return pow(message, self.e, self.n)
+    def encrypt(self, message, reciever_e, reciever_n):
+        return [pow(ord(char), reciever_e, reciever_n) for char in message]
 
 def main():
     # Instantiate AliceRSA
