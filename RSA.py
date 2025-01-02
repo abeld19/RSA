@@ -1,11 +1,12 @@
 from Alice import Alice;
 from Bob import Bob
+from Charlie import Charlie
 
 class menu:
 
     TITLE = (
         "\n2910326 Computer Security coursework\n"
-        + " by firstname-FAMILYNAME_SRN\n\n"
+        + " by Ahmet Toplu and Abel [surname]\n\n"
         + "\t********************\n"
         + "\t1. Declaration: Sorry but part of the program was copied\n"
         + "from the Internet! \n"
@@ -40,18 +41,30 @@ class menu:
 
     def q1(self):
         print("in q1")
+
+        # Alice, Bob, and Charlie are the three parties involved in the RSA encryption scheme.
         alice = Alice()
         bob = Bob()
+        charlie = Charlie()
+
+        # Alice and Bob generate their RSA key pairs
         print("Alice's Public Key (e, n):", (alice.e, alice.n))
         print("Bob's Public Key (e, n):", (bob.e, bob.n))
         
+        # Alice encrypts a message to send to Bob
         message = input("Enter a message to encrypt: ")
         ciphertext = alice.encrypt(message, bob.e, bob.n)
         print("Encrypted message (ciphertext):", ciphertext)
+
+        # Charlie intercepts the communication
+        charlie.intercept_message(ciphertext, alice.e, alice.n, bob.e, bob.n)
         
+        # Charlie attempts to brute-force decrypt the message
+        charlie.brute_force_decrypt(ciphertext, bob.e, bob.n)
+        
+        # Bob decrypts the message
         decrypted_message = bob.decrypt(ciphertext)
         print("Bob decrypted the message:", decrypted_message)
-
 
     def q2(self):
         print("in q2")
