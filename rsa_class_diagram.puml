@@ -1,0 +1,62 @@
+@startuml
+
+class Alice {
+    -bit_length: int
+    -p: int
+    -q: int
+    -n: int
+    -phi: int
+    -e: int
+    -d: int
+    +__init__(bit_length: int)
+    +generate_keys()
+    +encrypt(message: str, reciever_e: int, reciever_n: int): list
+}
+
+class Bob {
+    -bit_length: int
+    -p: int
+    -q: int
+    -n: int
+    -phi: int
+    -e: int
+    -d: int
+    +__init__(bit_length: int)
+    +generate_keys()
+    +decrypt(ciphertext: list): str
+    +run(sender_e: int, sender_n: int, ciphertext: list)
+}
+
+class Charlie {
+    -log_callback: function
+    -logged_messages: list
+    +__init__(log_callback: function)
+    +default_log(message: str)
+    +log(message: str)
+    +intercept_message(ciphertext: list, alice_e: int, alice_n: int, bob_e: int, bob_n: int)
+    +brute_force_decrypt(ciphertext: list, public_key_e: int, public_key_n: int, timeout: int)
+    +get_logged_messages(): list
+}
+
+class RSAApp {
+    -alice: Alice
+    -bob: Bob
+    -charlie: Charlie
+    -ciphertext: list
+    +__init__()
+    +log_to_charlie(message: str)
+    +initUI()
+    +encrypt_message()
+    +decrypt_message()
+    +simulate_charlie()
+}
+
+Alice --> Bob : encrypts message
+Bob --> Alice : decrypts message
+Charlie --> Alice : intercepts message
+Charlie --> Bob : brute-force decrypts message
+RSAApp --> Alice : uses
+RSAApp --> Bob : uses
+RSAApp --> Charlie : uses
+
+@enduml
