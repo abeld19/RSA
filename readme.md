@@ -62,6 +62,5 @@ The GUI provides three sections:
 - The brute-force decryption by Charlie is time-limited and demonstrates the importance of choosing secure key lengths.
 
 ## Authors
-- Ahmet Toplu
-- Abel Daniel
-
+- [Ahmet Toplu](https://github.com/Ahmet-Toplu)
+- [Abel Daniel](https://github.com/abeld19)
