@@ -6,10 +6,9 @@ class menu:
 
     TITLE = (
         "\n2910326 Computer Security coursework\n"
-        + " by Ahmet Toplu and Abel [surname]\n\n"
+        + " by Ahmet Toplu and Abel Daniel\n\n"
         + "\t********************\n"
-        + "\t1. Declaration: Sorry but part of the program was copied\n"
-        + "from the Internet! \n"
+        + "\t1. Question 1 \n"
         + "\t2. Question 2 \n"
         + "\t3. Question 3 \n"
         + "\t4. no attempt \n"
