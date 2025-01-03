@@ -11,8 +11,9 @@ class Charlie:
         self.logged_messages.append(message)
 
     def log(self, message):
-        """Log a message using the callback."""
-        self.log_callback(message)
+        """Log a message using the callback and print it."""
+        self.log_callback(message)  # Log the message using the callback
+        print(message)  # Print the message to the console
 
     def intercept_message(self, ciphertext, alice_e, alice_n, bob_e, bob_n):
         """

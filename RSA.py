@@ -36,8 +36,6 @@ class menu:
                 print(f"Error: {ex}")
 
     def q1(self):
-        # Clear the terminal
-        os.system('cls' if os.name == 'nt' else 'clear')  # 'cls' for Windows, 'clear' for Linux/MacOS
         print("in q1")
 
         # Alice, Bob, and Charlie are the three parties involved in the RSA encryption scheme.
@@ -59,7 +57,6 @@ class menu:
         
         # Charlie attempts to brute-force decrypt the message
         charlie.brute_force_decrypt(ciphertext, bob.e, bob.n)
-        print(charlie.get_logged_messages())
         
         # Bob decrypts the message
         decrypted_message = bob.decrypt(ciphertext)
@@ -77,4 +74,6 @@ class menu:
         return True
 
 if __name__ == "__main__":
+    # Clear the terminal
+    os.system('cls' if os.name == 'nt' else 'clear')  # 'cls' for Windows, 'clear' for Linux/MacOS
     menu()
