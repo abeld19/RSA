@@ -35,13 +35,13 @@ class Alice:
 
         # 5. Compute d, the modular inverse of e mod phi
         self.d = pow(self.e, -1, self.phi)
-        # Alice typically shares (e, n) with Bob and keeps p, q, d secret.
+        
 
     def encrypt(self, message, reciever_e, reciever_n):
         return [pow(ord(char), reciever_e, reciever_n) for char in message]
 
 def main():
-    # Instantiate AliceRSA
+    # Instantiate Alice
     alice = Alice(bit_length=512)
 
     # Print out the public key (e, n) for demonstration
@@ -51,7 +51,7 @@ def main():
     print(f"n:     {alice.n}")
     print(f"phi:   {alice.phi}")
     print(f"e (public): {alice.e}")
-    print(f"d (private): {alice.d}")  # In a real scenario, keep d hidden.
+    print(f"d (private): {alice.d}")  
 
     # Prompt the user for a message to encrypt
     msg_str = input("\nEnter a numeric message to encrypt: ")
